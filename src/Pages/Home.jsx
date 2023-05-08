@@ -8,6 +8,7 @@ const Home = () => {
 const [categories, setCategories] = useState([])
 const [products, setProducts] = useState([])
 const [productName, setProductName] = useState("")
+const [currentCategory, setCurrentCategory] = useState(0)
 
 const handleSubmit = (e) => {
   e.preventDefault()
@@ -18,6 +19,10 @@ const handleSubmit = (e) => {
 const productsByName = useMemo(() => {
 return products.filter((product) => product.title.toLowerCase().includes(productName.toLowerCase()))
 },[productName, products])
+
+const handleClickCategory = (e) => {
+  console.log(e.target.dataset.category)
+}
 
 useEffect(() => {
   
@@ -45,9 +50,9 @@ useEffect(() => {
       </div>
 
       <ul>
-        <li>All</li>
+        <li className="cursor-pointer"onClick={handleClickCategory} data-category={0}>All</li>
         {
-          categories.map(category => <li key={category.id}>{category.name}</li>)
+          categories.map(category => <li className="cursor-pointer"onClick={handleClickCategory} data-category={category.id} key={category.id}>{category.name}</li>)
         }
       </ul>
     </form>
