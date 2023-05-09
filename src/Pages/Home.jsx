@@ -42,7 +42,7 @@ useEffect(() => {
 },[currentCategory])
 
 useEffect(() => {
-  if(currentCategory != 0){
+  if(currentCategory !== 0){
     axiosEcommerce
       .get(`products?categoryId=${currentCategory}`)
       .then((res) => setProducts(res.data))
