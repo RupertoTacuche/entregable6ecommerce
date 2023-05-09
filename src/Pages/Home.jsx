@@ -21,7 +21,7 @@ return products.filter((product) => product.title.toLowerCase().includes(product
 },[productName, products])
 
 const handleClickCategory = (e) => {
-  console.log(e.target.dataset.category)
+  setCurrentCategory((e.target.dataset.category))
 }
 
 useEffect(() => {
@@ -33,13 +33,23 @@ useEffect(() => {
 },[])
 
 useEffect(() => {
-  
-  axiosEcommerce
+  if(currentCategory == 0){
+    axiosEcommerce
     .get("products")
     .then((res) => setProducts(res.data))
     .catch((err) => console.log(err))
-},[])
+  }
+},[currentCategory])
 
+useEffect(() => {
+  if(currentCategory != 0){
+    axiosEcommerce
+      .get(`products?categoryId=${currentCategory}`)
+      .then((res) => setProducts(res.data))
+      .catch((err) => console.log(err))
+  }
+  
+},[currentCategory])
 
   return (
   <main className="px-2"> 
