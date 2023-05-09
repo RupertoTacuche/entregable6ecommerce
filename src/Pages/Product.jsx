@@ -1,5 +1,6 @@
 import { Link, useParams } from "react-router-dom"
 import ProductDetail from "../components/product/ProductDetail"
+import SimilarProducts from "../components/product/SimilarProducts"
 
 
 const Product = () => {
@@ -16,6 +17,7 @@ const Product = () => {
       </section>
 
       <ProductDetail productId={id}/>
+      
     </main>
   )
 }

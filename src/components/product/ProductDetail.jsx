@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { axiosEcommerce } from "../../utils/configAxios"
+import SimilarProducts from "./SimilarProducts"
 
 
 
@@ -14,7 +15,8 @@ const ProductDetail = ({productId}) => {
       },[])
     
   return (
-    <section className="grid gap-6 sm:grid-cols-2">
+    <>
+    <section className="grid gap-6 sm:grid-cols-2 sm:items-center max-w-[1000px] mx-auto">
         <section>
             <div className="h-[300px] p-4">
                 <img className="h-full w-full object-contain" src={productData?.images[0].url} alt=""/>
@@ -49,6 +51,9 @@ const ProductDetail = ({productId}) => {
         </section>
     
     </section>
+    <SimilarProducts categoryId={productData?.categoryId}/>
+    </>
+    
   )
 }
 export default ProductDetail
