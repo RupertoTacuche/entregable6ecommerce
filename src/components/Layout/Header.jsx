@@ -1,23 +1,52 @@
-import { Link } from "react-router-dom"
+import { AiOutlineUser, AiOutlineShoppingCart } from "react-icons/ai";
+import { Link, useNavigate } from "react-router-dom";
+import { BiBox } from "react-icons/bi";
+import { useDispatch, useSelector } from "react-redux";
+import { changeIsShowCart } from "../../store/slices/cart.slices";
+
 
 const Header = () => {
+
+  const { token } = useSelector((store) => store.userInfo);
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
+
+const handleOpenCart = () => {
+
+  if (!token) {
+    return navigate('/login')
+  }
+  dispatch(changeIsShowCart())
+}
+
   return (
-    <section>
-      <Link to="/">
-        <h1>e-commerce</h1>
+    <header className=" flex justify-between items-center h-20 border border-b-2">
+      <Link to="/" className=" text-2xl w-[60%]">
+        E-commerce
       </Link>
-      <nav>
-        <Link to="/login">
-          <i className='bx bx-user'></i>
-        </Link>
-        <Link to="/purchases">
-          <i className='bx bx-box'></i>
-        </Link>
-        <button>
-        <i className='bx bx-cart'></i>
-        </button>
+      <nav className="w-[40%] ">
+        <ul className=" flex justify-evenly">
+          <li className=" text-2xl">
+            <Link to="/login">
+              {" "}
+              <AiOutlineUser />{" "}
+            </Link>
+          </li>
+          <li className=" text-2xl">
+            <Link to="/purchases">
+              {" "}
+              <BiBox />{" "}
+            </Link>
+          </li>
+          <li className=" text-2xl">
+            <button onClick={handleOpenCart}>
+              {" "}
+              <AiOutlineShoppingCart />{" "}
+            </button>
+          </li>
+        </ul>
       </nav>
-    </section>
+    </header>
   )
 }
 export default Header

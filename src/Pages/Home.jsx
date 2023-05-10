@@ -1,78 +1,66 @@
-import axios from "axios"
-import { useEffect, useMemo, useState } from "react"
-import ProductCard from "../components/home/ProductCard"
-import { axiosEcommerce } from "../utils/configAxios"
+import React, { useEffect, useMemo, useState } from "react";
 
+import { axiosEcommerce } from "../utils/configAxios";
+import { Sidebar } from "../components/filters/Sidebar";
+import ProductCard from "../components/home/ProductCard";
 
 const Home = () => {
+  const [products, setProducts] = useState([]);
+  const [productName, setProductName] = useState("");
 
-const [categories, setCategories] = useState([])
-const [products, setProducts] = useState([])
-const [productName, setProductName] = useState("")
-const [currentCategory, setCurrentCategory] = useState(0)
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setProductName(e.target.nameProduct.value);
+    e.target.nameProduct.value = "";
+  };
 
-const handleSubmit = (e) => {
-  e.preventDefault()
-  const newProductName = e.target.productName.value
-  setProductName(newProductName)
-}
+  const handleClickCategory = (e) => {
+    if (e.target.dataset.category == 0) {
+    
+      axiosEcommerce.get("products").then((res) => setProducts(res.data));
+    } else {
+      axiosEcommerce
+        .get(`products?categoryId=${e.target.dataset.category}`)
+        .then((res) => setProducts(res.data));
+    }
+    
+  };
 
-const productsByName = useMemo(() => {
-return products.filter((product) => product.title.toLowerCase().includes(productName.toLowerCase()))
-},[productName, products])
+  const productByName = useMemo(() => {
+    return products.filter((product) =>
+      product.title.toLowerCase().includes(productName.toLowerCase())
+    );
+  }, [products, productName]);
 
-const handleClickCategory = (e) => {
-  setCurrentCategory((e.target.dataset.category))
-}
-
-useEffect(() => {
-  
-  axiosEcommerce
-    .get("categories")
-    .then((res) => setCategories(res.data))
-    .catch((err) => console.log(err))
-},[])
-
-useEffect(() => {
-  if(currentCategory == 0){
-    axiosEcommerce
-    .get("products")
-    .then((res) => setProducts(res.data))
-    .catch((err) => console.log(err))
-  }
-},[currentCategory])
-
-useEffect(() => {
-  if(currentCategory !== 0){
-    axiosEcommerce
-      .get(`products?categoryId=${currentCategory}`)
-      .then((res) => setProducts(res.data))
-      .catch((err) => console.log(err))
-  }
-  
-},[currentCategory])
+  useEffect(() => {
+    axiosEcommerce.get("products").then((res) => setProducts(res.data));
+  }, []);
 
   return (
-  <main className="px-2"> 
-    <form onSubmit={handleSubmit}>
+    <main className="flex gap-5 mt-5  max-w-[1000px] mx-auto">
       <div>
-        <input id="productName" type="text" placeholder="What are you looking for ?"/>
-        <button> <i className='bx bx-search'></i></button>
+        <Sidebar handleClickCategory={handleClickCategory}/>
       </div>
-
-      <ul>
-        <li className="cursor-pointer"onClick={handleClickCategory} data-category={0}>All</li>
-        {
-          categories.map(category => <li className="cursor-pointer"onClick={handleClickCategory} data-category={category.id} key={category.id}>{category.name}</li>)
-        }
-      </ul>
-    </form>
-    <section className="grid gap-8 py-6">
-      {
-        productsByName.map(product => ( <ProductCard key={product.id} product={product}/>
-        ))}
-    </section>
-  </main>
-  )
-}
-export default Home
+      <div className="w-full flex flex-col gap-5">
+        <form className="w-full" onSubmit={handleSubmit}>
+          <input
+            className="border h-10 w-[70%]"
+            id="nameProduct"
+            type="text"
+            placeholder="What are you looking for ?"
+          />
+          <button className="px-4 py-2 bg-red-700 text-white w-[30%]">
+            {" "}
+            <i className="bx bx-search"></i>
+          </button>
+        </form>
+        <section className="grid gap-8 py-6">
+          {productByName.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </section>
+      </div>
+    </main>
+  );
+};
+export default Home;
