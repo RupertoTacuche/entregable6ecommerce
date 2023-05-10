@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { axiosEcommerce } from "../../utils/configAxios"
 import SimilarProducts from "./SimilarProducts"
+import { Link } from "react-router-dom"
 
 
 
@@ -12,10 +13,16 @@ const ProductDetail = ({productId}) => {
         axiosEcommerce.get(`products/${productId}`)
         .then((res) => setProductData(res.data))
         .catch((err) => console.log(err))
-      },[])
+      },[productId])
     
   return (
     <>
+        <section className="flex gap-2 items-center">
+            <Link to="/">Home</Link>
+            <div className="h-[7px] aspect-square bg-red-500 rounded-full"></div>
+            <span className="font-bold">{productData?.title}</span>
+        </section>
+
     <section className="grid gap-6 sm:grid-cols-2 sm:items-center max-w-[1000px] mx-auto">
         <section>
             <div className="h-[300px] p-4">
@@ -47,11 +54,11 @@ const ProductDetail = ({productId}) => {
             Add to cart <i className='bx bx-cart'></i>
         </button>
 
-        <p className="text-sm my-6">{productData?.description}</p>
+        <p className="text-sm my-6 text-gray-800">{productData?.description}</p>
         </section>
     
     </section>
-    <SimilarProducts categoryId={productData?.categoryId}/>
+    <SimilarProducts productId={productData?.id} categoryId={productData?.categoryId}/>
     </>
     
   )

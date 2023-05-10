@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react"
 import ProductCard from "../components/home/ProductCard"
 import { axiosEcommerce } from "../utils/configAxios"
 
+
 const Home = () => {
 
 const [categories, setCategories] = useState([])

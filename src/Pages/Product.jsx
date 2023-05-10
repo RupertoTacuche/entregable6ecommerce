@@ -10,11 +10,7 @@ const Product = () => {
  
   return (
     <main className="px-2">
-      <section className="flex gap-2 items-center">
-        <Link to="/">Home</Link>
-        <div className="h-[7px] aspect-square bg-red-500 rounded-full"></div>
-        <span className="font-bold">Samsung Galaxy S22</span>
-      </section>
+      
 
       <ProductDetail productId={id}/>
       
