@@ -21,8 +21,11 @@ const handleOpenCart = () => {
 
   return (
     <header className=" flex justify-between items-center h-20 border border-b-2">
-      <Link to="/" className=" text-2xl w-[60%]">
+      <Link to="/" className=" text-2xl w-[60%] flex justify-center hover:translate-x-1 ">
+      <img  className="w-[60px]" src="/picture/lospicudazos.png" alt="" />
+        <span className="font-extrabold hover:text-red-700">
         E-commerce
+        </span>
       </Link>
       <nav className="w-[40%] ">
         <ul className=" flex justify-evenly">
