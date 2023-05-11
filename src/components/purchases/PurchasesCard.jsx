@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { formatDateDDMMYYYY } from "../../utils/date"
 
 export const PurchasesCard = ({ purchase }) => {
-  console.log(purchase);
+
   return (
     <Link to={`../products/${purchase.product.id}`} className="grid grid-cols-2 gap-2 text-sm sm:text-base">
     <section className="flex gap-2 items-center">

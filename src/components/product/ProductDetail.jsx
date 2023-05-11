@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { axiosEcommerce } from "../../utils/configAxios"
+import { axiosEcommerce, getConfig } from "../../utils/configAxios"
 import SimilarProducts from "./SimilarProducts"
 import { Link } from "react-router-dom"
 
@@ -8,13 +8,23 @@ import { Link } from "react-router-dom"
 
 const ProductDetail = ({productId}) => {
     const [productData, setProductData] = useState()
+    const [cant, setCant] = useState(1)
     
     useEffect(() => {
+        setCant(1)
         axiosEcommerce.get(`products/${productId}`)
         .then((res) => setProductData(res.data))
         .catch((err) => console.log(err))
       },[productId])
     
+const handleAddCart = () => {
+    axiosEcommerce.post('cart', {quantity: cant, productId: productId}, getConfig())
+    .then(res => {
+      alert('producto agregado')
+    })
+}
+
+
   return (
     <>
         <section className="flex gap-2 items-center">
@@ -44,13 +54,13 @@ const ProductDetail = ({productId}) => {
             <article>
                 <h4 className="text-gray-400 font-bold">Quantity</h4>
                 <div className="flex items-center" >
-                    <button className="border-[1px] p-2 px-4 hover:bg-red-500 hover:text-white transition-colors" >-</button>
-                    <span className="border-[1px] p-2 px-4 border-x-0" >1</span>
-                    <button className="border-[1px] p-2 px-4 hover:bg-red-500 hover:text-white transition-colors" >+</button>
+                    <button onClick={()=> setCant(cant - 1)} disabled={cant === 1} className="border-[1px] p-2 px-4 hover:bg-red-500 hover:text-white transition-colors" >-</button>
+                    <span className="border-[1px] p-2 px-4 border-x-0" >{cant}</span>
+                    <button onClick={()=> setCant(cant + 1)} className="border-[1px] p-2 px-4 hover:bg-red-500 hover:text-white transition-colors" >+</button>
                 </div>
             </article>
         </section>
-        <button className="w-full bg-red-500 py-2 text-white hover:bg-red-600 transition-colors rounded-sm mt-6">
+        <button onClick={handleAddCart} className="w-full bg-red-500 py-2 text-white hover:bg-red-600 transition-colors rounded-sm mt-6">
             Add to cart <i className='bx bx-cart'></i>
         </button>
 
