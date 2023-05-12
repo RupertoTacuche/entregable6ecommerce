@@ -58,8 +58,8 @@ const Modalfilter = () => {
             </div>
             <div className="absolute bottom-0 p-3 w-full">
               <hr />
-              <p className="flex justify-end font-extrabold text-gray-600">TOTAL: ${totalPrice}</p>
-              <button onClick={handlePurchase}  className=" font-extrabold bg-red-600 text-white px-3 py-2 w-full hover:text-black">
+              <p className="flex justify-end font-extrabold text-gray-600"></p>
+              <button   className=" font-extrabold bg-red-600 text-white px-3 py-2 w-full hover:text-black">
                 Checkout <i className="bx bx-cart"></i>
               </button>
             </div>
