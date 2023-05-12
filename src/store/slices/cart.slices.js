@@ -4,6 +4,7 @@ import { axiosEcommerce, getConfig } from "../../utils/configAxios";
 const initialState = {
   products: [],
   isShowCart: false,
+  isShowFilter:false
 };
 
 export const cartSlice = createSlice({
@@ -20,6 +21,20 @@ export const cartSlice = createSlice({
   },
 });
 
+
+
+export const filterSlice = createSlice({
+  name: "filterSlice",
+  initialState,
+  reducers: {
+    changeIsShowFilter: (state) => {
+      state.isShowFilter = !state.isShowFilter;
+    },
+   
+  },
+});
+
+export const { changeIsShowfilter } = filterSlice.actions
 export const { changeIsShowCart, setProducts } = cartSlice.actions;
 
 export const getCartProducts = () => (dispatch) => {

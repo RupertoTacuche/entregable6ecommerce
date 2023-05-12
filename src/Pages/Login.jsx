@@ -46,7 +46,12 @@ const Login = () => {
         <form onSubmit={handleSubmit(handleLogin)} className="flex flex-col gap-4">
           <div className="relative">
             <input
-              type="email"
+              type="email" id ="email" {...register("email",{
+              pattern:{
+              value:"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$",
+              message:'ingresa un email valido'
+              }})
+              }
               className="w-full border py-2 px-10 rounded-md outline-none"
               placeholder="Ingresa tu correo"
               {...register("email")}

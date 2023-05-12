@@ -3,16 +3,25 @@ import React, { useEffect, useMemo, useState } from "react";
 import { axiosEcommerce } from "../utils/configAxios";
 import { Sidebar } from "../components/filters/Sidebar";
 import ProductCard from "../components/home/ProductCard";
+import { useDispatch, useSelector } from "react-redux";
+
+import Modalfilter from "../components/filters/Modalfilter";
 
 const Home = () => {
+
+  const { token } = useSelector((store) => store.userInfo)
   const [products, setProducts] = useState([]);
   const [productName, setProductName] = useState("");
-
+  const { changeIsShowCart } = useSelector((store) => store.cart);
+  const dispatch = useDispatch()
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     setProductName(e.target.nameProduct.value);
     e.target.nameProduct.value = "";
   };
+
+
 
   const handleClickCategory = (e) => {
     if (e.target.dataset.category == 0) {
@@ -35,6 +44,13 @@ const Home = () => {
   useEffect(() => {
     axiosEcommerce.get("products").then((res) => setProducts(res.data));
   }, []);
+  
+  
+  const handleOpenCart = () => {
+
+    
+    dispatch(changeIsShowCart())
+  }
 
   return (
     <main className="flex gap-5 mt-5  max-w-[1000px] mx-auto">
@@ -54,7 +70,14 @@ const Home = () => {
             <i className="bx bx-search"></i>
           </button>
         </form>
-        <section className="grid gap-8 py-6">
+        <div   className=" md:hidden lg:hidden sm:block flex justify-end px-4 cursor-pointer">
+        <Modalfilter  />
+        <i className="bx bx-filter"></i>
+        <span className="font-bold text-gray-400">Filter</span>
+        
+      
+        </div>
+        <section className="grid gap-8 grid-cols-1 sm:grid-cols-3 py-6">
           {productByName.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}

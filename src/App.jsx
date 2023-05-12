@@ -8,6 +8,7 @@ import Notfound from "./Pages/Notfound";
 import { ProtectedAuth } from "./components/auth/ProtectedAuth";
 import { Purchases } from "./Pages/Purchases";
 import { Cart } from "./components/cart/Cart";
+import Footer from "./components/Layout/Footer";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/products/:id" element={<Product />} />
         <Route path="/*" element={<Notfound />} />
       </Routes>
+      <Footer/>
       <Cart />
     </section>
   );

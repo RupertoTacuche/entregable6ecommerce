@@ -11,7 +11,7 @@ export const Category = ({handleClickCategory}) => {
     }, [])
 
   return (
-    <div>
+    <div className="hidden sm:block" >
         <h2 className=" font-bold">Category</h2>
         <ul>
           <li onClick={handleClickCategory} data-category={0}>All</li>
